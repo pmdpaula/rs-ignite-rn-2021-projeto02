@@ -93,7 +93,7 @@ const Register = () => {
               control={formControll}
               placeholder="Preço"
               keyboardType="numeric"
-              error={errors.name && errors?.amount.message}
+              error={errors.amount && errors?.amount.message}
             />
 
             <TransactionsTypes>
