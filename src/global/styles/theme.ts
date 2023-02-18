@@ -22,4 +22,8 @@ export default {
     medium: 'Poppins_500Medium',
     bold: 'Poppins_700Bold',
   },
+  border: {
+    width: 1,
+    radius: 5,
+  },
 };
