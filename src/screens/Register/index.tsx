@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -17,6 +16,9 @@ import { CategorySelectButton } from '../../components/Form/CategorySelectButton
 import { Container, Fields, Form, Header, Title, TransactionsTypes } from './styles';
 import { CategorySelect } from './../CategorySelect';
 import { InputForm } from '../../components/Form/InputForm';
+
+import { Modal, Keyboard, Alert } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 // import { Control, FieldValues } from 'react-hook-form/dist/types';
 
 interface FormData {
@@ -72,6 +74,8 @@ const Register = () => {
       onPress={() => {
         Keyboard.dismiss();
       }}
+      containerStyle={{ flex: 1 }}
+      style={{ flex: 1 }}
     >
       <Container>
         <Header>

@@ -2,6 +2,7 @@ import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface TypeProps {
   type: 'up' | 'down';
@@ -11,12 +12,8 @@ interface ContainerProps extends TypeProps {
   isActive: boolean;
 }
 
-export const Container = styled(TouchableOpacity)<ContainerProps>`
+export const Container = styled.View<ContainerProps>`
   width: 48%;
-
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
 
   background-color: ${({ theme, isActive, type }) =>
     isActive && type == 'up'
@@ -29,6 +26,12 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
   border-style: solid;
   border-color: ${({ theme }) => theme.colors.text};
   border-radius: ${({ theme }) => theme.border.radius}px;
+`;
+
+export const Button = styled(RectButton)`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
   padding: 16px;
 `;
