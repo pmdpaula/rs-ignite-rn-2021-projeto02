@@ -3,15 +3,17 @@ import { RectButtonProps } from 'react-native-gesture-handler';
 
 import { Container, Icon, Title, Button } from './styles';
 
+export type TransactionType = 'positive' | 'negative';
+
 export interface TransactionTypeButtonProps extends RectButtonProps {
-  type: 'up' | 'down';
+  type: TransactionType;
   title: string;
   isActive: boolean;
 }
 
 const icons = {
-  up: 'arrow-up-circle',
-  down: 'arrow-down-circle',
+  positive: 'arrow-up-circle',
+  negative: 'arrow-down-circle',
 };
 
 export const TransactionTypeButton = ({

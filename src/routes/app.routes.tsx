@@ -8,8 +8,15 @@ import { useTheme } from 'styled-components/native';
 
 import { Dashboard } from '../screens/Dashboard';
 import { Register } from '../screens/Register';
+import { Resume } from './../screens/Resume';
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator<AppRoutesParamList>();
+
+export type AppRoutesParamList = {
+  Listagem: undefined; // <- undefined = rota não requer parâmetros.
+  Cadastrar: undefined;
+  Resumo: undefined;
+};
 
 const AppRoutes = () => {
   const theme = useTheme();
@@ -47,7 +54,7 @@ const AppRoutes = () => {
       />
       <Screen
         name="Resumo"
-        component={Register}
+        component={Resume}
         options={{
           tabBarIcon: ({ size, color }) => (
             <MaterialIcons name="pie-chart" size={size} color={color} />
