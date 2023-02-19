@@ -2,9 +2,10 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { Feather } from '@expo/vector-icons';
+import { TransactionType } from '../TransactionTypeButton';
 
 interface TypeProps {
-  type: 'positive' | 'negative';
+  type: TransactionType;
 }
 
 export const Container = styled.View`
