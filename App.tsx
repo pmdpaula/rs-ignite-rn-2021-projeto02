@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import AppLoading from 'expo-app-loading';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { AuthProvider } from './src/hooks/auth';
+
 import {
   useFonts,
   Poppins_400Regular,
@@ -19,6 +21,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AppRoutes } from './src/routes/app.routes';
 import { StatusBar } from 'react-native';
+import { SingIn } from './src/screens/SingIn';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -36,7 +39,10 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <StatusBar barStyle="light-content" backgroundColor={theme.colors.primary} translucent />
         <NavigationContainer>
-          <AppRoutes />
+          {/* <AppRoutes /> */}
+          <AuthProvider>
+            <SingIn />
+          </AuthProvider>
         </NavigationContainer>
       </ThemeProvider>
     </GestureHandlerRootView>
