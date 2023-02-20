@@ -12,7 +12,7 @@ interface SignInSocialButtonProps extends RectButtonProps {
 
 const SignInSocialButton = ({ title, svg: Svg, onPress, ...rest }: SignInSocialButtonProps) => {
   return (
-    <Button {...rest}>
+    <Button onPress={onPress} {...rest}>
       <ImageContainer>
         <Svg />
       </ImageContainer>

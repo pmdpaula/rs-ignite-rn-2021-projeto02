@@ -1,7 +1,6 @@
-import styled from 'styled-components/native';
-
-import { RFValue } from 'react-native-responsive-fontsize';
 import { RectButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 
 export const Button = styled(RectButton)`
   width: 100%;

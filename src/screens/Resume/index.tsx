@@ -1,30 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTheme } from 'styled-components/native';
-import { useFocusEffect } from '@react-navigation/native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { ActivityIndicator } from 'react-native';
-import { VictoryPie } from 'victory-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { addMonths, subMonths, format } from 'date-fns';
+import { useFocusEffect } from '@react-navigation/native';
+import { addMonths, format, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components/native';
+import { VictoryPie } from 'victory-native';
 
 import { HistoryCard } from '../../components/HistoryCard';
 import { ScreenHeader } from '../../components/ScreenHeader';
 import { TransactionCardDataProps } from '../../components/TransactionCard';
-
+import { useAuth } from '../../hooks/auth';
 import { categories } from '../../utils/categories';
-
 import {
   ChartWrapper,
   Container,
   HistoryCardWrapper,
+  LoadContainer,
+  Month,
   MonthSelect,
   MonthSelectButton,
   MonthSelectIcon,
-  Month,
-  TextNoData,
-  LoadContainer,
 } from './styles';
 
 interface CategoryDataProps {
@@ -42,6 +40,7 @@ export const Resume = () => {
   const [totalByCategory, setTotalByCategory] = useState<CategoryDataProps[]>([]);
 
   const theme = useTheme();
+  const { user } = useAuth();
 
   const handleDateChange = (action: 'next' | 'prev') => {
     if (action === 'next') {
@@ -54,7 +53,7 @@ export const Resume = () => {
   const loadData = async () => {
     setIsLoading(true);
 
-    const dataKey = '@gofinances:transactions';
+    const dataKey = `@gofinances:transactions_user:${user.id}}`;
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = JSON.parse(response || '[]');
 

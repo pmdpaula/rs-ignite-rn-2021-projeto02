@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Header, Title, Icon, Footer, Amount, LastTransaction } from './styles';
+
+import { Amount, Container, Footer, Header, Icon, LastTransaction, Title } from './styles';
 
 // type HiglightCardProps = {
 //   type: 'positive' | 'negative' | 'total';
