@@ -3,7 +3,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from '@react-navigation/native';
 import { addMonths, format, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
@@ -50,12 +50,12 @@ export const Resume = () => {
     }
   };
 
-  const loadData = async () => {
+  const loadData = async (): Promise<void> => {
     setIsLoading(true);
 
     const dataKey = `@gofinances:transactions_user:${user.id}}`;
     const response = await AsyncStorage.getItem(dataKey);
-    const transactions = JSON.parse(response || '[]');
+    const transactions = JSON.parse(response || '[]') as TransactionCardDataProps[];
 
     const expensives = transactions.filter(
       (expensive: TransactionCardDataProps) =>

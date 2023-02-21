@@ -58,13 +58,20 @@ const Dashboard = () => {
     type: TransactionType,
   ) => {
     const lastTransaction = new Date(
-      Math.max.apply(
-        Math,
-        collection
+      Math.max(
+        ...collection
           .filter((transaction) => transaction.type === type)
           .map((transaction) => new Date(transaction.date).getTime()),
-      ),
+      ) as number,
     );
+    // const lastTransaction = new Date(
+    //   Math.max.apply(
+    //     Math,
+    //     collection
+    //       .filter((transaction) => transaction.type === type)
+    //       .map((transaction) => new Date(transaction.date).getTime()),
+    //   ) as number,
+    // );
 
     const response = isValid(lastTransaction)
       ? `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', {

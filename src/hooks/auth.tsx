@@ -1,5 +1,3 @@
-// @ts-ignore
-import { CLIENT_ID, REDIRECT_URI, RESPONSE_TYPE, SCOPE } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as AuthSession from 'expo-auth-session';
@@ -31,6 +29,11 @@ interface AuthorizationResponse {
   type: string;
 }
 
+const { GOOGLE_CLIENT_ID } = process.env;
+const { GOOGLE_REDIRECT_URI } = process.env;
+const { GOOGLE_RESPONSE_TYPE } = process.env;
+const { GOOGLE_SCOPE } = process.env;
+
 export const AuthContext = createContext({} as IAuthContextData);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
@@ -41,12 +44,8 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const signInWithGoogle = async () => {
     try {
-      const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-      const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
-      const RESPONSE_TYPE = process.env.REACT_APP_RESPONSE_TYPE;
-      const SCOPE = encodeURI(process.env.REACT_APP_SCOPE);
-
-      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+      const encodedScope = encodeURI(GOOGLE_SCOPE);
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=${GOOGLE_RESPONSE_TYPE}&scope=${encodedScope}`;
       const { type, params } = (await AuthSession.startAsync({ authUrl })) as AuthorizationResponse;
 
       if (type === 'success') {

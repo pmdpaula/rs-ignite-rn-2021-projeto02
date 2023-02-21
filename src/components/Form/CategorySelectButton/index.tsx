@@ -8,7 +8,7 @@ interface CategorySelectButtonProps extends RectButtonProps {
   onPress: () => void;
 }
 
-export const CategorySelectButton = ({ title, onPress, ...rest }: CategorySelectButtonProps) => {
+export const CategorySelectButton = ({ title, onPress }: CategorySelectButtonProps) => {
   return (
     <Container onPress={onPress}>
       <Category>{title}</Category>

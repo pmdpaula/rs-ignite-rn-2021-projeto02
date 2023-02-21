@@ -26,7 +26,7 @@ export const SingIn = () => {
 
   const logoSize = 140;
 
-  const handleSignInWithGoogle = async () => {
+  const handleSignInWithGoogle = async (): Promise<void> => {
     try {
       setIsLoading(true);
       return await signInWithGoogle();
@@ -37,7 +37,7 @@ export const SingIn = () => {
     }
   };
 
-  const handleSignInWithApple = async () => {
+  const handleSignInWithApple = async (): Promise<void> => {
     try {
       setIsLoading(true);
       return await signInWithApple();
