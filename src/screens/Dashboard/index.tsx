@@ -1,32 +1,32 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import { useTheme } from 'styled-components/native';
+import { isValid } from 'date-fns';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { isValid } from 'date-fns';
+import { useTheme } from 'styled-components/native';
 
 import HiglightCard from '../../components/HiglightCard';
 import { TransactionCard, TransactionCardDataProps } from '../../components/TransactionCard';
-
+import { TransactionType } from '../../components/TransactionTypeButton';
+import { useAuth } from '../../hooks/auth';
 import {
   Container,
   Header,
-  UserInfo,
-  Photo,
-  User,
-  UserGreeting,
-  UserName,
-  UserWrapper,
-  Icon,
   HighlightCards,
-  Transactions,
+  Icon,
+  LoadContainer,
+  LogoutButton,
+  Photo,
   Title,
   TransactionList,
-  LogoutButton,
-  LoadContainer,
+  Transactions,
+  User,
+  UserGreeting,
+  UserInfo,
+  UserName,
+  UserWrapper,
 } from './styles';
-import { TransactionType } from '../../components/TransactionTypeButton';
 
 export interface DataTransactionListProps extends TransactionCardDataProps {
   id: string;
@@ -51,19 +51,27 @@ const Dashboard = () => {
   );
 
   const theme = useTheme();
+  const { signOut, user } = useAuth();
 
   const getLastTransactionDate = (
     collection: DataTransactionListProps[],
     type: TransactionType,
   ) => {
     const lastTransaction = new Date(
-      Math.max.apply(
-        Math,
-        collection
+      Math.max(
+        ...collection
           .filter((transaction) => transaction.type === type)
           .map((transaction) => new Date(transaction.date).getTime()),
-      ),
+      ) as number,
     );
+    // const lastTransaction = new Date(
+    //   Math.max.apply(
+    //     Math,
+    //     collection
+    //       .filter((transaction) => transaction.type === type)
+    //       .map((transaction) => new Date(transaction.date).getTime()),
+    //   ) as number,
+    // );
 
     const response = isValid(lastTransaction)
       ? `${lastTransaction.getDate()} de ${lastTransaction.toLocaleString('pt-BR', {
@@ -75,7 +83,7 @@ const Dashboard = () => {
   };
 
   const loadTransactions = async () => {
-    const dataKey = '@gofinances:transactions';
+    const dataKey = `@gofinances:transactions_user:${user.id}}`;
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
 
@@ -153,16 +161,7 @@ const Dashboard = () => {
   useEffect(() => {
     loadTransactions();
 
-    // AsyncStorage.removeItem('@gofinances:transactions');
-    // const lendo = async () => {
-    //   const dataKey = '@gofinances:transactions';
-    //   const response = await AsyncStorage.getItem(dataKey);
-    //   const transactions = response ? JSON.parse(response) : [];
-
-    //   console.log(transactions);
-    // };
-
-    // lendo();
+    // AsyncStorage.removeItem(`@gofinances:transactions_user:${user.id}`);
   }, []);
 
   useFocusEffect(
@@ -182,19 +181,15 @@ const Dashboard = () => {
           <Header>
             <UserWrapper>
               <UserInfo>
-                <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/19227876' }} />
+                <Photo source={{ uri: user.avatar_url }} />
 
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Fulano</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
 
-              <LogoutButton
-                onPress={() => {
-                  console.log('Logout');
-                }}
-              >
+              <LogoutButton onPress={signOut}>
                 <Icon name="power" />
               </LogoutButton>
             </UserWrapper>

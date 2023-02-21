@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { Control, FieldValues, useForm } from 'react-hook-form';
-import * as Yup from 'yup';
-
-import { Modal, Keyboard, Alert } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { yupResolver } from '@hookform/resolvers/yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Control, FieldValues, useForm } from 'react-hook-form';
+import { Alert, Keyboard, Modal } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import uuid from 'react-native-uuid';
+import * as Yup from 'yup';
 
 import Button from '../../components/Form/Button';
+import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
+import { InputForm } from '../../components/Form/InputForm';
+import { ScreenHeader } from '../../components/ScreenHeader';
 import {
   TransactionTypeButton,
   TransactionTypeButtonProps,
 } from '../../components/TransactionTypeButton';
-import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
-import { CategorySelect } from './../CategorySelect';
-import { InputForm } from '../../components/Form/InputForm';
-
-import { Container, Fields, Form, TransactionsTypes } from './styles';
+import { useAuth } from '../../hooks/auth';
 import { AppRoutesParamList } from '../../routes/app.routes';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { ScreenHeader } from '../../components/ScreenHeader';
+import { CategorySelect } from './../CategorySelect';
+import { Container, Fields, Form, TransactionsTypes } from './styles';
 
 interface FormData {
   name: string;
@@ -45,6 +44,8 @@ const Register = () => {
   });
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+
+  const { user } = useAuth();
 
   const { navigate } = useNavigation<RegisterNavigationProps>();
 
@@ -74,7 +75,7 @@ const Register = () => {
     };
 
     try {
-      const dataKey = '@gofinances:transactions';
+      const dataKey = `@gofinances:transactions_user:${user.id}}`;
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 

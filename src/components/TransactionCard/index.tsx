@@ -1,7 +1,7 @@
 import React from 'react';
+
 import { categories } from '../../utils/categories';
 import { TransactionType } from '../TransactionTypeButton';
-
 import { Amount, Category, CategoryName, Container, Date, Footer, Icon, Title } from './styles';
 
 // interface Category {

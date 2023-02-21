@@ -13,7 +13,6 @@ module.exports = {
   ],
   'overrides': [
   ],
-  'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'ecmaVersion': 'latest',
     'sourceType': 'module',
@@ -32,5 +31,9 @@ module.exports = {
     'quotes': ['error', 'single', { avoidEscape: true }],
     'semi': ['error', 'always'],
     '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 };

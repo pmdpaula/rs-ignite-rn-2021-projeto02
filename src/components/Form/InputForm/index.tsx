@@ -2,8 +2,8 @@ import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 // import { FieldError, FieldErrors } from 'react-hook-form/dist/types';
 import { TextInputProps } from 'react-native';
-import Input from '../Input';
 
+import Input from '../Input';
 import { Container, Error } from './styles';
 
 interface InputFormProps extends TextInputProps {
